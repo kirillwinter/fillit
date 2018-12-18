@@ -18,6 +18,6 @@
 # include <stdio.h>
 
 int		ft_read_file_validate(char *filename);
-int		get_array_figures(char *filename, int tet_count);
+char	**get_array_figures(char *filename, int tet_count);
 
 #endif

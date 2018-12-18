@@ -14,7 +14,8 @@
 
 static void	del(void *content, size_t content_size)
 {
-	content_size = 0;
+	if (content_size) 
+		content_size = 0;
 	ft_memdel(content);
 }
 

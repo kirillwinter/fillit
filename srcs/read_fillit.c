@@ -76,14 +76,14 @@ int		ft_read_file_validate(char *filename)
 {
 	int		fd;
 	int		ret;
-	char	buf[BUFF_SIZE];
+	char	*buf;
 	int		tet_count;
 
 	tet_count = 0;
 	if ((fd = ft_read_file(filename)) == -1)
 		return (0);
-	// if (!(buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-	// 		return (-1);
+	if (!(buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
+			return (0);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
@@ -96,6 +96,7 @@ int		ft_read_file_validate(char *filename)
 		// ft_putstr(buf);
 		tet_count++;
 	}
+	free(buf);
 	ft_close_file(fd);
 	return (tet_count);
 }

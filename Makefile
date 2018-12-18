@@ -19,8 +19,7 @@ INCLUDES = includes
 all: $(NAME)
 
 $(NAME):
-	# gcc -Wall -Wextra -Werror -I$(INCLUDES) $(SRCS) -o $(NAME) -L libft -lft -I libft/includes
-	gcc -g -Wall -Werror -Wextra $(SRCS) -o $(NAME) -L libft/ -lft -I libft/includes/ -I includes/
+	@gcc -g -Wall -Werror -Wextra $(SRCS) -o $(NAME) -L libft/ -lft -I libft/includes/ -I includes/
 
 clean:
 	rm -f $(OBJ)

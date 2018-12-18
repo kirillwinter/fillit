@@ -29,10 +29,8 @@ static int	ft_strdif(char *s1, char *s2)
 char		*ft_strstr(const char *str1, const char *str2)
 {
 	int i;
-	int j;
 
 	i = 0;
-	j = 0;
 	if (str1 == str2)
 		return ((char *)str1);
 	while (str1[i])
