@@ -19,5 +19,6 @@
 
 int		ft_read_file_validate(char *filename);
 char	**get_array_figures(char *filename, int tet_count);
+int		get_map_size(int tet_count);
 
 #endif

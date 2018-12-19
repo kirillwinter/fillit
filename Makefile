@@ -12,7 +12,7 @@
 
 NAME = fillit
 
-SRCS = srcs/main.c srcs/fillit.c srcs/read_fillit.c
+SRCS = srcs/main.c srcs/fillit.c srcs/read_fillit.c srcs/array_fig.c
 
 INCLUDES = includes
 

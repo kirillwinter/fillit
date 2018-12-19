@@ -12,13 +12,13 @@
 
 #include "fillit.h"
 
-void character_replacement(char *buf)
+void	character_replacement(char *buf)
 {
-	int i;
-	static char ch = 'A';
+	int			i;
+	static char	ch = 'A';
 
 	i = 0;
-	while(buf[i] != '\0')
+	while (buf[i] != '\0')
 	{
 		if (buf[i] == '#')
 			buf[i] = ch;
@@ -27,7 +27,7 @@ void character_replacement(char *buf)
 	ch++;
 }
 
-int	validate_touch(char *buf, int i)
+int		validate_touch(char *buf, int i)
 {
 	int valid;
 
@@ -43,7 +43,7 @@ int	validate_touch(char *buf, int i)
 	return (valid);
 }
 
-int validate_tetriminos(char *buf, int ret)
+int		validate_tetriminos(char *buf, int ret)
 {
 	int i;
 	int grid_coun;
@@ -66,7 +66,7 @@ int validate_tetriminos(char *buf, int ret)
 		}
 		bsn_coun += (buf[i] == '\n') ? 1 : 0;
 	}
-	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n' 
+	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n'
 		|| buf[20] != '\n') || (grid_coun != 4 || bsn_coun != 5) || (val < 5))
 		return (0);
 	return (1);
@@ -83,17 +83,15 @@ int		ft_read_file_validate(char *filename)
 	if ((fd = ft_read_file(filename)) == -1)
 		return (0);
 	if (!(buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-			return (0);
+		return (0);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		if (validate_tetriminos(buf, ret) == 0)
 		{
 			ft_putstr("error");
-			return (0); 
+			return (0);
 		}
-		// character_replacement(buf);
-		// ft_putstr(buf);
 		tet_count++;
 	}
 	free(buf);
