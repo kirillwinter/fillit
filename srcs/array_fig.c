@@ -56,7 +56,7 @@ char	*get_coordinates_fig(char *buf, int map_size)
 	{
 		if (buf[i] == '#' && i != -start_pos)
 		{
-			arr[nb] = '0' + start_pos + i;
+			arr[nb] = start_pos + i;
 			nb++;
 		}
 		i++;
@@ -99,18 +99,33 @@ char	*get_mask(int tet_count)
 	return (mask);
 }
 
-char	*check_fig(char *arr, int tet_count)
+char	**change_coord(char *a)
 {
-	if (tet_count == 1 && (arr[0] == 1 && arr[1] == 4 && arr[2] == 5))
+	char	**b;
+	int		i;
+	int		j;
+
+	i = -1;
+	if (!(b = (char **)malloc(3 * sizeof(char *)) || \
+		(b[0] = ft_strnew(4)) || (b[1] = ft_strnew(4))))
+		return (NULL);
+	while (a[++i] != '\0')
 	{
-		arr[0] = 1;
-		arr[1] = 2;
-		arr[2] = 3;
+		if (a[i] < 0)
+		{
+			b[0][i] = a[i] % 4 + 4;        // для х
+			b[1][i] = a[i] / 4 - 1;    // для у
+		}
+		else
+		{
+			b[0][i] = a[i] % 4;            // для х
+			b[1][i] = a[i] / 4;        // для у
+		}
 	}
-	if (tet_count == 2)
-	{
-		
-	}
+	b[0][j] = 0;
+	b[1][j] = 0;
+	b[2] = '\0';
+	return (b);
 }
 
 char	**get_array_figures(char *filename, int tet_count)
