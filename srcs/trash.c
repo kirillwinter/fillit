@@ -95,3 +95,37 @@ int    **get_coordinates_fig(char *buf, int map_size)
     }
     return (axis);
 }
+
+
+char *get_left_up_coord(char *a)
+{
+	char	*b;
+	int		min;
+	int		i;
+
+	i = 0;
+	min = a[i];
+	b = ft_strnew(4);
+	while (a[i] != '\0')
+	{
+		if (a[i] < min)
+			a[i] = min;
+		i++;
+	}
+	i = 0;
+	while (min > 20)
+	{
+		while (a[i] != '\0')
+		{
+			a[i] = a[i] - 10;
+			i++;
+		}
+		min = min - 10;
+	}
+	i = 0;
+	while (a[i] != '\0')
+	{
+		b[i] = a[i] % 10;
+	}
+
+}

@@ -12,58 +12,58 @@
 
 #include "fillit.h"
 
-// int		get_start_pos(char *buf, int map_size)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	flag;
+int		get_start_pos(char *buf, int map_size)
+{
+	int	i;
+	int	j;
+	int	flag;
 
-// 	i = 0;
-// 	j = 0;
-// 	flag = 0;
-// 	while (j <= map_size)
-// 	{
-// 		while (i <= map_size * map_size)
-// 		{
-// 			if (buf[i] == '#')
-// 			{
-// 				flag = 1;
-// 				break ;
-// 			}
-// 			i += map_size;
-// 		}
-// 		if (flag)
-// 			break ;
-// 		j++;
-// 		i = j;
-// 	}
-// 	return (i);
-// }
+	i = 0;
+	j = 0;
+	flag = 0;
+	while (j <= map_size)
+	{
+		while (i <= map_size * map_size)
+		{
+			if (buf[i] == '#')
+			{
+				flag = 1;
+				break ;
+			}
+			i += map_size;
+		}
+		if (flag)
+			break ;
+		j++;
+		i = j;
+	}
+	return (i);
+}
 
-// char	*get_coordinates_fig(char *buf, int map_size)
-// {
-// 	char	*arr;
-// 	int		i;
-// 	int		nb;
-// 	int		start_pos;
+char	*get_coordinates_fig(char *buf, int map_size)
+{
+	char	*arr;
+	int		i;
+	int		nb;
+	int		start_pos;
 
-// 	i = 0;
-// 	nb = 0;
-// 	arr = (char*)malloc(4 * sizeof(char));
-// 	start_pos = -get_start_pos(buf, map_size);
-// 	i = 0;
-// 	while (buf[i] != '\0')
-// 	{
-// 		if (buf[i] == '#' && i != -start_pos)
-// 		{
-// 			arr[nb] = start_pos + i;
-// 			nb++;
-// 		}
-// 		i++;
-// 	}
-// 	arr[nb] = '\0';
-// 	return (arr);
-// }
+	i = 0;
+	nb = 0;
+	arr = ft_strnew(4);
+	start_pos = -get_start_pos(buf, map_size);
+	i = 0;
+	while (buf[i] != '\0')
+	{
+		if (buf[i] == '#')
+		{
+			arr[nb] = start_pos + i;
+			nb++;
+		}
+		i++;
+	}
+	arr[nb] = '\0';
+	return (arr);
+}
 
 char	*del_bsn(char *buf)
 {
@@ -128,6 +128,32 @@ char	*del_bsn(char *buf)
 // 	return (b);
 // }
 
+
+
+
+char    *figure_cut(char *b, int square)
+{
+    int    i;
+
+    i = 0;
+    while (b[i++] > ft_sqrt(square) + 10 && b[i++] > ft_sqrt(square) + 10 && \
+        b[i++] > ft_sqrt(square) + 10 && b[i] > ft_sqrt(square) + 10)
+    {
+        while (i >= 0)
+            b[i--] -= 10;
+    }
+    i = 0;
+    while (b[i++] % 10 > 1 && b[i++] % 10 > 1 && \
+        b[i++] % 10 > 1 && b[i] > 1)
+    {
+        while (i >= 0)
+        {
+            b[i--] -= 1;
+        }
+    }
+    return (b);
+}
+
 char	*get_dec_coord(char *a)
 {
 	char	*b;
@@ -149,9 +175,10 @@ char	*get_dec_coord(char *a)
 			b[j++] = i + 29;
 		i++;
 	}
-	b[j] = '\0';
+	b = figure_cut(b, 16);
 	return (b);	
 }
+
 
 char	*get_struct_figures(char *filename, int tet_count)
 {
@@ -178,5 +205,5 @@ char	*get_struct_figures(char *filename, int tet_count)
 	ft_putstr(rez);
 	free(buf);
 	ft_close_file(fd);
-	return (NULL);
+	return (rez);
 }
