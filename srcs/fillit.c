@@ -25,17 +25,43 @@ int    get_map_size(int tet_count)
     return (i);
 }
 
-char	*map_creation(int tet_count)
+char	*map_creation(int map_size)
 {
-    int map_size;
-    char *map;
+    char	*map;
+	int		i;
+	int		j;
+	int		flag;
+	map_size = 4;
 
-    map_size = get_map_size(tet_count) * get_map_size(tet_count);
-    if ((map = ft_strnew(map_size)) == NULL)
+	i = 0;
+	flag = 1;
+	j = 0;
+    if ((map = ft_strnew(map_size * map_size)) == NULL)
         return (0);
-    map = ft_memset(map, '.', map_size);
+	while (i < map_size * map_size)
+	{
+		if (i == map_size * flag)
+		{
+			j++;
+			flag++;
+		}
+		map[i] = 11 + i + (j * (10 - map_size));
+		i++;
+	}
     return (map);
 }
+
+// char	*map_creation(int tet_count)
+// {
+//     int map_size;
+//     char *map;
+
+//     map_size = get_map_size(tet_count) * get_map_size(tet_count);
+//     if ((map = ft_strnew(map_size)) == NULL)
+//         return (0);
+//     map = ft_memset(map, '.', map_size);
+//     return (map);
+// }
 
 // int fillit_map(char *map, char *arr, int map_size, char *mask)
 // {
@@ -62,3 +88,29 @@ char	*map_creation(int tet_count)
 // 	}
 // }
 
+char	*fillit(char *map, char *a, int map_size)
+{
+	char	*map_ptr;
+	int i;
+	map_size = 4; // !!!
+	// int j;
+	i = 0;
+	while (i < map_size * map_size)
+	{
+		if ((map_ptr = strpbrk(map, a))) // ИСПОЛЬЗОВАТЬ ФУНКЦИЮ ИЗ ЛИБЫ!!!!!!!
+		{
+			*map_ptr = 'A';
+		}
+		i++;
+	}
+	i = 0;
+	while (i < map_size * map_size)
+	{
+		if (map[i] != 'A')
+			map[i] = '.';
+		i++;
+	}
+	// ft_putstr(map);
+	// printf("%s", map);
+	return (map);
+}

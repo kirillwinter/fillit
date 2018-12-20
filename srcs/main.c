@@ -23,11 +23,39 @@ int		main(int argc, char **argv)
 		{
 			ft_putstr("OK");
 			ft_putchar('\n');
-			if (!(get_array_figures(argv[1], tet_count)))
-				ft_putstr("GOVNO");
+			if (!(get_struct_figures(argv[1], tet_count)))
+				ft_putstr("GOVNO\n");
 		}
 		else 
 			ft_putstr("KO");
 	}
 	return (0);
 }
+
+// int	main ()
+// {
+// 	char	map[] = {11, 12, 13, 21, 22, 23, 31, 32, 33};
+// 	char	a[] = {12, 22, 31, 32};
+// 	char	*map_ptr;
+// 	int i;
+// 	// int j;
+// 	i = 0;
+// 	while (i < 9)
+// 	{
+// 		if ((map_ptr = strpbrk(map, a)))
+// 		{
+// 			*map_ptr = 'A';
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < 9)
+// 	{
+// 		if (map[i] != 'A')
+// 			map[i] = '.';
+// 		i++;
+// 	}
+// 	// ft_putstr(map);
+// 	printf("%s", map);
+// 	return (0);
+// }
