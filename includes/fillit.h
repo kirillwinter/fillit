@@ -17,15 +17,30 @@
 # include "libft.h"
 # include <stdio.h>
 
-struct    s_tetrimino
+typedef struct		s_elem
 {
-    int    width;
-    int    height;
-    char	**axis;
-}        t_tetr;
+	char			*str;
+	char			sym;
+	int		    	x;
+	int		    	y;
+	struct s_elem	*next;
+}					t_elem;
+
+
+// struct    s_tetrimino
+// {
+//     int    width;
+//     int    height;
+//     char	**axis;
+// }        t_tetr;
 
 int		ft_read_file_validate(char *filename);
-char	**get_array_figures(char *filename, int tet_count);
+char	*get_struct_figures(char *filename, int tet_count);
 int		get_map_size(int tet_count);
+t_elem	*ft_new_fig(char *str, char sym, int x, int y);
+char	*fillit(char *map, char *a, int map_size);
+char	*map_creation(int map_size);
+int    get_map_size(int tet_count);
+
 
 #endif
