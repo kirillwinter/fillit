@@ -21,7 +21,7 @@ typedef struct		s_elem
 {
 	char			axis[3][2];
 	char			linear[3];
-	// int		    	width;
+	int		    	width;
 	// int		    	height;
 	struct s_elem	*next;
 }					t_elem;
@@ -41,10 +41,11 @@ typedef struct	s_map
 int		ft_read_file_validate(char *filename);
 char	*get_struct_figures(char *filename, int tet_count);
 int		get_map_size(int tet_count);
-t_elem	*ft_new_fig(char *str, char sym, int x, int y);
+t_elem	*ft_new_fig();
 // char	*fillit(char *map, char *a, int map_size);
 char	*map_creation(int map_size);
 int    get_map_size(int tet_count);
+void	ft_list_push_back(t_elem **begin_list, t_elem *new);
 
 
 #endif

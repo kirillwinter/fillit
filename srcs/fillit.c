@@ -115,4 +115,7 @@ char	*map_creation(int map_size)
 // 	return (map);
 // }
 
-char	*fillit(char *map, t_elem-, int map_size)
+// char	*fillit(char *map, t_elem *fig, int map_size)
+// {
+	
+// }

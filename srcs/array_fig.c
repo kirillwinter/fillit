@@ -65,13 +65,13 @@ void	get_coordinates_fig(char *buf, t_elem *fig)
 		{
 			if (i < start_pos)
 			{
-				fig->axis[nb][0] = (i - start_pos) / 5 - 1;
-				fig->axis[nb][1] = (i - start_pos) % 5 + 5;
+				fig->axis[nb][0] = '0' + (i - start_pos) / 5 - 1;
+				fig->axis[nb][1] = '0' + (i - start_pos) % 5 + 5;
 			}
 			else
 			{
-				fig->axis[nb][0] = (i - start_pos) / 5;
-				fig->axis[nb][1] = (i - start_pos) % 5;
+				fig->axis[nb][0] = '0' + (i - start_pos) / 5;
+				fig->axis[nb][1] = '0' + (i - start_pos) % 5;
 			}
 			nb++;
 		}
@@ -79,7 +79,7 @@ void	get_coordinates_fig(char *buf, t_elem *fig)
 	}
 }
 
-void	lin_coord(char **axis, int map_size, t_elem *fig)
+void	lin_coord(int map_size, t_elem *fig)
 {
 	int		i;
 
@@ -93,19 +93,38 @@ char	*get_struct_figures(char *filename, int tet_count)
 	int		fd;
 	int		ret;
 	char	buf[21];
-	t_elem	fig;
+	t_elem	*fig;
+	t_elem	*head;
 	int		map_size;
 
 	if ((fd = ft_read_file(filename)) == -1)
 		return (NULL);
 	map_size = get_map_size(tet_count);
+	head = NULL;
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
-		get_coordinates_fig(buf, &fig);
+		fig = ft_new_fig();
+		get_coordinates_fig(buf, fig);
+		lin_coord(map_size, fig);
+		// printf("linear = %s  \n", fig->linear);
+		ft_list_push_back(&head, fig);
+		// fig = fig.next;
 		// rez = fillit(map_creation(get_map_size(tet_count)), get_dec_coord(del_bsn(buf)), get_map_size(tet_count)); 
 		// ft_new_fig(get_dec_coord(del_bsn(buf)), ch, 1, 1);
 		// printf("coord = %s\n\n", arr[nbr_tet]);
+	}
+	int i = 0;
+	while (head)
+	{
+		i++;
+		printf("linear = %s  \n", fig->linear);
+		printf("axis1 = %s  \n", fig->axis[0]);
+		printf("axis2 = %s  \n", fig->axis[1]);
+		printf("axis3 = %s  \n", fig->axis[2]);
+		printf("i = %d  \n", i);
+		head = head->next;
+
 	}
 	ft_close_file(fd);
 	return (0);

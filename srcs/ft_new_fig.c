@@ -12,15 +12,52 @@
 
 #include "fillit.h"
 
-t_elem	*ft_new_fig(char *str, char sym, int x, int y)
+t_elem	*ft_new_fig()
 {
 	t_elem	*elem;
 
 	if (!(elem = (t_elem *)malloc(sizeof(t_elem))))
 		return (NULL);
-	elem->shifts = shifts;
-	// elem->x = x;
-	// elem->y = y;
 	elem->next = NULL;
 	return (elem);
+}
+
+// void	ft_list_push_back(t_elem **begin_list, t_elem *new)
+// {
+// 	t_elem	*q;
+
+// 	if (!(*begin_list))
+// 		*begin_list = new;
+// 	else
+// 	{
+// 		q = *begin_list;
+// 		while (q->next)
+// 			q = q->next;
+// 		q -> next = new;
+// 	}
+// }
+
+void	ft_list_push_back(t_elem **alst, t_elem *new)
+{
+	t_elem *list;
+
+	if (new != NULL)
+	{
+		if (alst && *alst)
+		{
+			list = *alst;
+			while (list != NULL)
+			{
+				if (list->next)
+					list = list->next;
+				else
+				{
+					list->next = new;
+					break ;
+				}
+			}
+		}
+		else
+			*alst = new;
+	}
 }
