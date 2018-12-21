@@ -13,6 +13,7 @@
 #ifndef FILLIT_H
 # define FILLIT_H
 # define BUFF_SIZE		21
+# define ABS(x) (x < 0 ? -x : x)
 
 # include "libft.h"
 # include <stdio.h>
@@ -22,7 +23,7 @@ typedef struct		s_elem
 	char			axis[3][2];
 	char			linear[3];
 	int		    	width;
-	// int		    	height;
+	int		    	height;
 	struct s_elem	*next;
 }					t_elem;
 

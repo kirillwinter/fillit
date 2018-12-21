@@ -65,13 +65,13 @@ void	get_coordinates_fig(char *buf, t_elem *fig)
 		{
 			if (i < start_pos)
 			{
-				fig->axis[nb][0] = '0' + (i - start_pos) / 5 - 1;
-				fig->axis[nb][1] = '0' + (i - start_pos) % 5 + 5;
+				fig->axis[nb][0] = (i - start_pos) / 5 - 1;
+				fig->axis[nb][1] = (i - start_pos) % 5 + 5;
 			}
 			else
 			{
-				fig->axis[nb][0] = '0' + (i - start_pos) / 5;
-				fig->axis[nb][1] = '0' + (i - start_pos) % 5;
+				fig->axis[nb][0] = (i - start_pos) / 5;
+				fig->axis[nb][1] = (i - start_pos) % 5;
 			}
 			nb++;
 		}
@@ -88,11 +88,28 @@ void	lin_coord(int map_size, t_elem *fig)
 		fig->linear[i] = fig->axis[i][1] + fig->axis[i][0] * (map_size);
 }
 
+void    get_height(t_elem *fig)
+{
+    int    a;
+    int    b;
+    int    c;
+
+    a = ABS(fig->axis[0][0] - fig->axis[1][0]);
+    b = ABS(fig->axis[0][0] - fig->axis[2][0]);
+    c = ABS(fig->axis[1][0] - fig->axis[2][0]);
+    
+    if (a >= b && a >= c)
+        fig->height = a;
+    else if (b >= a && b >= c)
+        fig->height = b;
+    else if (c >= a && c >= b)
+        fig->height = c;
+}
+
 char	*get_struct_figures(char *filename, int tet_count)
 {
 	int		fd;
-	int		ret;
-	char	buf[21];
+	char	buf[BUFF_SIZE];
 	t_elem	*fig;
 	t_elem	*head;
 	int		map_size;
@@ -101,14 +118,16 @@ char	*get_struct_figures(char *filename, int tet_count)
 		return (NULL);
 	map_size = get_map_size(tet_count);
 	head = NULL;
-	while ((ret = read(fd, buf, BUFF_SIZE)))
+	while ((read(fd, buf, BUFF_SIZE)))
 	{
-		buf[ret] = '\0';
+		buf[20] = '\0';
 		fig = ft_new_fig();
 		get_coordinates_fig(buf, fig);
 		lin_coord(map_size, fig);
+		get_height(fig);
 		// printf("linear = %s  \n", fig->linear);
 		ft_list_push_back(&head, fig);
+		
 		// fig = fig.next;
 		// rez = fillit(map_creation(get_map_size(tet_count)), get_dec_coord(del_bsn(buf)), get_map_size(tet_count)); 
 		// ft_new_fig(get_dec_coord(del_bsn(buf)), ch, 1, 1);
@@ -118,11 +137,12 @@ char	*get_struct_figures(char *filename, int tet_count)
 	while (head)
 	{
 		i++;
+		// ft_putstr(fig->linear);
 		printf("linear = %s  \n", fig->linear);
-		printf("axis1 = %s  \n", fig->axis[0]);
-		printf("axis2 = %s  \n", fig->axis[1]);
-		printf("axis3 = %s  \n", fig->axis[2]);
-		printf("i = %d  \n", i);
+		// printf("axis1 = %s  \n", fig->axis[0]);
+		// printf("axis2 = %s  \n", fig->axis[1]);
+		// printf("axis3 = %s  \n", fig->axis[2]);
+		// printf("i = %d  \n", i);
 		head = head->next;
 
 	}

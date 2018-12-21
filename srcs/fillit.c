@@ -22,6 +22,7 @@ int    get_map_size(int tet_count)
 	while (i * i < tet_count * 4 && i <= 46340)
 		i++;
 	printf("map_size =  %d\n\n", i);
+	i = 4; // УДАЛИТЬ СТРОКУ
 	return (i);
 }
 
@@ -119,3 +120,8 @@ char	*map_creation(int map_size)
 // {
 	
 // }
+
+char	*fillit(char *map, t_elem *fig, int map_size)
+{
+
+}
