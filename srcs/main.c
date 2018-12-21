@@ -25,6 +25,7 @@ int		main(int argc, char **argv)
 			ft_putchar('\n');
 			if (!(get_struct_figures(argv[1], tet_count)))
 				ft_putstr("GOVNO\n");
+			
 		}
 		else 
 			ft_putstr("KO");

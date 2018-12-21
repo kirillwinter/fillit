@@ -16,24 +16,17 @@ int		get_start_pos(char *buf)
 {
 	int	i;
 	int	j;
-	int	flag;
 
 	i = 0;
 	j = 0;
-	flag = 0;
 	while (j <= 4)
 	{
 		while (i < 20)
 		{
 			if (buf[i] == '#')
-			{
-				flag = 1;
-				break ;
-			}
+				return (i);
 			i += 5;
 		}
-		if (flag)
-			break ;
 		j++;
 		i = j;
 	}
@@ -88,24 +81,6 @@ void	lin_coord(int map_size, t_elem *fig)
 		fig->linear[i] = fig->axis[i][1] + fig->axis[i][0] * (map_size);
 }
 
-void    get_height(t_elem *fig)
-{
-    int    a;
-    int    b;
-    int    c;
-
-    a = ABS(fig->axis[0][0] - fig->axis[1][0]);
-    b = ABS(fig->axis[0][0] - fig->axis[2][0]);
-    c = ABS(fig->axis[1][0] - fig->axis[2][0]);
-    
-    if (a >= b && a >= c)
-        fig->height = a;
-    else if (b >= a && b >= c)
-        fig->height = b;
-    else if (c >= a && c >= b)
-        fig->height = c;
-}
-
 char	*get_struct_figures(char *filename, int tet_count)
 {
 	int		fd;
@@ -124,7 +99,6 @@ char	*get_struct_figures(char *filename, int tet_count)
 		fig = ft_new_fig();
 		get_coordinates_fig(buf, fig);
 		lin_coord(map_size, fig);
-		get_height(fig);
 		// printf("linear = %s  \n", fig->linear);
 		ft_list_push_back(&head, fig);
 		
@@ -133,12 +107,12 @@ char	*get_struct_figures(char *filename, int tet_count)
 		// ft_new_fig(get_dec_coord(del_bsn(buf)), ch, 1, 1);
 		// printf("coord = %s\n\n", arr[nbr_tet]);
 	}
+	fillit(map_creation(4), fig, 4);
 	int i = 0;
 	while (head)
 	{
 		i++;
 		// ft_putstr(fig->linear);
-		printf("linear = %s  \n", fig->linear);
 		// printf("axis1 = %s  \n", fig->axis[0]);
 		// printf("axis2 = %s  \n", fig->axis[1]);
 		// printf("axis3 = %s  \n", fig->axis[2]);

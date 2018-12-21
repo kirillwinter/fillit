@@ -88,20 +88,67 @@ char	*map_creation(int map_size)
 // 	return (map);
 // }
 
-char	*fillit(char *map, t_elem *fig, int map_size)
+void	print_map(char *map, int map_size)
 {
 	int i;
-	int	flag;
-	int	j;
 
 	i = 0;
-	flag = 1;
-	j = 0;
+	while (map[i] != '\0')
+	{
+		ft_putchar(map[i]);
+		if (++i % map_size == 0)
+			ft_putchar('\n');
+	}
+}
+
+
+char	*fillit(char *map, t_elem *fig, int map_size)
+{
+	int		i;
+	char	ch = 'A';
+	int		shift_x;
+	int		flag;
+
+	i = 0;
 	while (i < map_size * map_size)
 	{
+		shift_x = i % map_size;
 		if (fig->axis[0][0] < 0)
-			i = 
+			i = -fig->axis[0][0] * map_size;
+		/* проверяем выход за карту по Х */
+		if (fig->axis[0][1] > map_size || fig->axis[1][1] > map_size || fig->axis[2][1] > map_size)
+		{
+			/* возвразаем координаты Х */
+			fig->axis[0][1] = fig->axis[0][1] - shift_x;
+			fig->axis[1][1] = fig->axis[1][1] - shift_x;
+			fig->axis[2][1] = fig->axis[2][1] - shift_x;
+			/* идем на следующую строку (уверичиваем у) */
+			fig->axis[0][0]++;
+			fig->axis[1][0]++;
+			fig->axis[2][0]++;
+		}
+		/* проверяем выход за карту по У */
+		// if (fig->axis[0][0] > map_size || fig->axis[1][0] > map_size || fig->axis[2][0] > map_size)
+		// {
+		// 	map = map_creation(map_size);
+		// 	//fillit()
+		// }
+		// if (map[fig->linear[0]] != '.' && map[fig->linear[1]] != '.' && map[fig->linear[2]] == '.' && map[i] != '.')
+		// 	i++;
+		if (map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.' && map[i + fig->linear[2]] == '.' && map[i] == '.')
+		{
+			map[i + fig->linear[0]] = ch;
+			map[i + fig->linear[1]] = ch;
+			map[i + fig->linear[2]] = ch;
+			map[i] = ch;
+			break ;
+		}
 		i++;
 	}
+	// printf("map = %s\n", map);
+	// ft_putstr(map);
+	ft_putchar('\n');
+	print_map(map, map_size);
+
     return (map);
 }

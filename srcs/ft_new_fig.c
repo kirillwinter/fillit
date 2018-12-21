@@ -22,21 +22,6 @@ t_elem	*ft_new_fig()
 	return (elem);
 }
 
-// void	ft_list_push_back(t_elem **begin_list, t_elem *new)
-// {
-// 	t_elem	*q;
-
-// 	if (!(*begin_list))
-// 		*begin_list = new;
-// 	else
-// 	{
-// 		q = *begin_list;
-// 		while (q->next)
-// 			q = q->next;
-// 		q -> next = new;
-// 	}
-// }
-
 void	ft_list_push_back(t_elem **alst, t_elem *new)
 {
 	t_elem *list;
