@@ -18,10 +18,9 @@ t_elem	*ft_new_fig(char *str, char sym, int x, int y)
 
 	if (!(elem = (t_elem *)malloc(sizeof(t_elem))))
 		return (NULL);
-	elem->str = str;
-	elem->sym = sym;
-	elem->x = x;
-	elem->y = y;
+	elem->shifts = shifts;
+	// elem->x = x;
+	// elem->y = y;
 	elem->next = NULL;
 	return (elem);
 }

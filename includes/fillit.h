@@ -19,10 +19,9 @@
 
 typedef struct		s_elem
 {
-	char			*str;
-	char			sym;
-	int		    	x;
-	int		    	y;
+	char			shifts[3][2];
+	// int		    	width;
+	// int		    	height;
 	struct s_elem	*next;
 }					t_elem;
 
