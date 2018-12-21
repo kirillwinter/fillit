@@ -19,13 +19,18 @@
 
 typedef struct		s_elem
 {
-	char			shifts[3][2];
+	char			axis[3][2];
+	char			linear[3];
 	// int		    	width;
 	// int		    	height;
 	struct s_elem	*next;
 }					t_elem;
 
-
+typedef struct	s_map
+{
+	char	*map;
+	int		size;
+}				t_map;
 // struct    s_tetrimino
 // {
 //     int    width;
@@ -37,7 +42,7 @@ int		ft_read_file_validate(char *filename);
 char	*get_struct_figures(char *filename, int tet_count);
 int		get_map_size(int tet_count);
 t_elem	*ft_new_fig(char *str, char sym, int x, int y);
-char	*fillit(char *map, char *a, int map_size);
+// char	*fillit(char *map, char *a, int map_size);
 char	*map_creation(int map_size);
 int    get_map_size(int tet_count);
 
