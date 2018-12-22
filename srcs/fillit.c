@@ -107,21 +107,20 @@ char	*fillit(char *map, t_elem *fig, int map_size)
 	int		i;
 	char	ch = 'A';
 	int		shift_x;
-	int		flag;
 
 	i = 0;
 	while (i < map_size * map_size)
 	{
 		shift_x = i % map_size;
-		if (fig->axis[0][0] < 0)
-			i = -fig->axis[0][0] * map_size;
+		// if (fig->axis[0][0] < 0)
+		// 	i = -fig->axis[0][0] * map_size;
 		/* проверяем выход за карту по Х */
-		if (fig->axis[0][1] > map_size || fig->axis[1][1] > map_size || fig->axis[2][1] > map_size)
+		if (fig->axis[0][1] + shift_x > map_size || fig->axis[1][1] + shift_x > map_size || fig->axis[2][1] + shift_x > map_size)
 		{
 			/* возвразаем координаты Х */
-			fig->axis[0][1] = fig->axis[0][1] - shift_x;
-			fig->axis[1][1] = fig->axis[1][1] - shift_x;
-			fig->axis[2][1] = fig->axis[2][1] - shift_x;
+			// fig->axis[0][1] = fig->axis[0][1] - shift_x;
+			// fig->axis[1][1] = fig->axis[1][1] - shift_x;
+			// fig->axis[2][1] = fig->axis[2][1] - shift_x;
 			/* идем на следующую строку (уверичиваем у) */
 			fig->axis[0][0]++;
 			fig->axis[1][0]++;
@@ -130,12 +129,10 @@ char	*fillit(char *map, t_elem *fig, int map_size)
 		/* проверяем выход за карту по У */
 		// if (fig->axis[0][0] > map_size || fig->axis[1][0] > map_size || fig->axis[2][0] > map_size)
 		// {
-		// 	map = map_creation(map_size);
-		// 	//fillit()
+		// 	map = map_creation(map_size + 1);
+		// 	fillit(map, fig, map_size + 1);
 		// }
-		// if (map[fig->linear[0]] != '.' && map[fig->linear[1]] != '.' && map[fig->linear[2]] == '.' && map[i] != '.')
-		// 	i++;
-		if (map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.' && map[i + fig->linear[2]] == '.' && map[i] == '.')
+		if ((map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.' && map[i + fig->linear[2]] == '.' && map[i] == '.') && (fig->axis[0][1] + shift_x < map_size || fig->axis[1][1] + shift_x < map_size || fig->axis[2][1] + shift_x < map_size))
 		{
 			map[i + fig->linear[0]] = ch;
 			map[i + fig->linear[1]] = ch;
