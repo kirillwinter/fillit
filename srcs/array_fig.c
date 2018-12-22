@@ -88,11 +88,13 @@ char	*get_struct_figures(char *filename, int tet_count)
 	t_elem	*fig;
 	t_elem	*head;
 	int		map_size;
+	char 	*map;
 
 	if ((fd = ft_read_file(filename)) == -1)
 		return (NULL);
 	map_size = get_map_size(tet_count);
 	head = NULL;
+	map = map_creation(4);
 	while ((read(fd, buf, BUFF_SIZE)))
 	{
 		buf[20] = '\0';
@@ -100,6 +102,7 @@ char	*get_struct_figures(char *filename, int tet_count)
 		get_coordinates_fig(buf, fig);
 		lin_coord(map_size, fig);
 		// printf("linear = %s  \n", fig->linear);
+		map = fillit(map, fig, 4);
 		ft_list_push_back(&head, fig);
 		
 		// fig = fig.next;
@@ -107,19 +110,22 @@ char	*get_struct_figures(char *filename, int tet_count)
 		// ft_new_fig(get_dec_coord(del_bsn(buf)), ch, 1, 1);
 		// printf("coord = %s\n\n", arr[nbr_tet]);
 	}
-	fillit(map_creation(4), fig, 4);
-	int i = 0;
-	while (head)
-	{
-		i++;
-		// ft_putstr(fig->linear);
-		// printf("axis1 = %s  \n", fig->axis[0]);
-		// printf("axis2 = %s  \n", fig->axis[1]);
-		// printf("axis3 = %s  \n", fig->axis[2]);
-		// printf("i = %d  \n", i);
-		head = head->next;
+	// int i = 0;
+	// while (head)
+	// {
+	// 	// map = fillit(map, fig, 4);
+	// 	i++;
+	// 	// ft_putstr(fig->linear);
+	// 	// printf("axis1 = %s  \n", fig->axis[0]);
+	// 	// printf("axis2 = %s  \n", fig->axis[1]);
+	// 	// printf("axis3 = %s  \n", fig->axis[2]);
+	// 	// printf("i = %d  \n", i);
+	// 	head = head->next;
 
-	}
+	// }
+	// map = fillit(map, head->next, 4);
+	print_map(map);
 	ft_close_file(fd);
+	ft_putchar('\n');
 	return (0);
 }

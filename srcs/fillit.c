@@ -88,11 +88,14 @@ char	*map_creation(int map_size)
 // 	return (map);
 // }
 
-void	print_map(char *map, int map_size)
+void	print_map(char *map)
 {
 	int i;
+	int map_size;
 
 	i = 0;
+	map_size = ft_sqrt(ft_strlen(map));
+	printf("map_size_print = %d  \n", map_size);
 	while (map[i] != '\0')
 	{
 		ft_putchar(map[i]);
@@ -105,17 +108,18 @@ void	print_map(char *map, int map_size)
 char	*fillit(char *map, t_elem *fig, int map_size)
 {
 	int		i;
-	char	ch = 'A';
+	static char	ch = 'A' - 1;
 	int		shift_x;
-
+	
 	i = 0;
+	ch++;
 	while (i < map_size * map_size)
 	{
 		shift_x = i % map_size;
-		// if (fig->axis[0][0] < 0)
-		// 	i = -fig->axis[0][0] * map_size;
+		if (fig->axis[0][0] < 0)
+			i = -fig->axis[0][0] * map_size;
 		/* проверяем выход за карту по Х */
-		if (fig->axis[0][1] + shift_x > map_size || fig->axis[1][1] + shift_x > map_size || fig->axis[2][1] + shift_x > map_size)
+		if (fig->axis[0][1] + shift_x > map_size || fig->axis[1][1] + shift_x > map_size || fig->axis[2][1] + shift_x > map_size || i / map_size >= 1)
 		{
 			/* возвразаем координаты Х */
 			// fig->axis[0][1] = fig->axis[0][1] - shift_x;
@@ -127,12 +131,14 @@ char	*fillit(char *map, t_elem *fig, int map_size)
 			fig->axis[2][0]++;
 		}
 		/* проверяем выход за карту по У */
-		// if (fig->axis[0][0] > map_size || fig->axis[1][0] > map_size || fig->axis[2][0] > map_size)
-		// {
-		// 	map = map_creation(map_size + 1);
-		// 	fillit(map, fig, map_size + 1);
-		// }
-		if ((map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.' && map[i + fig->linear[2]] == '.' && map[i] == '.') && (fig->axis[0][1] + shift_x < map_size || fig->axis[1][1] + shift_x < map_size || fig->axis[2][1] + shift_x < map_size))
+		if (fig->axis[0][0] >= map_size || fig->axis[1][0] >= map_size || fig->axis[2][0] >= map_size)
+		{
+			map = map_creation(map_size + 1);
+			printf("%c!!!!!\n", ch);
+			fillit(map, fig, map_size + 1);
+		}
+		if ((map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.' && map[i + fig->linear[2]] == '.' && map[i] == '.') 
+			&& (fig->axis[0][1] + shift_x < map_size || fig->axis[1][1] + shift_x < map_size || fig->axis[2][1] + shift_x < map_size))
 		{
 			map[i + fig->linear[0]] = ch;
 			map[i + fig->linear[1]] = ch;
@@ -145,7 +151,6 @@ char	*fillit(char *map, t_elem *fig, int map_size)
 	// printf("map = %s\n", map);
 	// ft_putstr(map);
 	ft_putchar('\n');
-	print_map(map, map_size);
-
+	// print_map(map, map_size);
     return (map);
 }
