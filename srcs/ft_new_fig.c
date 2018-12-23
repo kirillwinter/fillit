@@ -23,6 +23,7 @@ t_elem	*ft_new_fig(char *buf, int map_size, int nb)
 	get_width(elem);
 	get_positiv_height(elem);
 	elem->ch = 'A' + nb;
+	elem->used = 0;
 	elem->next = NULL;
 	return (elem);
 }

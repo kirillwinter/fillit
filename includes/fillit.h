@@ -25,6 +25,7 @@ typedef struct		s_elem
 	int				height_positiv;
 	int		    	width;
 	char			ch;
+	int				used;
 	struct s_elem	*next;
 }					t_elem;
 
@@ -39,9 +40,10 @@ char	*get_struct_figures(char *filename, int tet_count);
 int		get_map_size(int tet_count);
 t_elem	*ft_new_fig();
 char	*map_creation(int map_size);
-int    get_map_size(int tet_count);
+int		get_map_size(int tet_count);
 void	ft_list_push_back(t_elem **begin_list, t_elem *new);
-char	*fillit(char *map, t_elem *fig, int map_size);
+int		recurs_fillit(char *map, t_elem *head, int map_size);
+int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int i);
 void	print_map(char *map);
 void	get_positiv_height(t_elem *fig);
 void	get_width(t_elem *fig);

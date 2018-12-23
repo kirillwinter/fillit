@@ -42,8 +42,6 @@ char	*get_struct_figures(char *filename, int tet_count)
 	{
 		buf[20] = '\0';
 		fig = ft_new_fig(buf, map_size, ++i);
-	
-		map = fillit(map, fig, 4);
 		ft_list_push_back(&head, fig);
 	}
 	// int i = 0;
@@ -60,6 +58,7 @@ char	*get_struct_figures(char *filename, int tet_count)
 
 	// }
 	// map = fillit(map, head->next, 4);
+	recurs_fillit(map, head, 4);
 	print_map(map);
 	ft_close_file(fd);
 	ft_putchar('\n');

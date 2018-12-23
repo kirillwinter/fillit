@@ -255,3 +255,55 @@ char *get_left_up_coord(char *a)
 // 	arr[nb] = '\0';
 // 	return (arr);
 // }
+
+// int fillit_map(char *map, char *arr, int map_size, char *mask)
+// {
+// 	int i;
+// 	int	kr;
+// 	char ch = 'A';
+// 	char *map_ptr;
+
+// 	kr = 0;
+// 	map_ptr = map;
+// 	while (map)
+// 	{
+// 		if (map[arr[kr]] != '.')
+// 		{
+// 			map_ptr = ft_memset(map_ptr, '.', map_size * map_size);
+// 			map++;
+// 		}
+// 		else
+// 		{
+// 			map[arr[kr]] == ch;
+// 			kr++;
+// 		}
+		
+// 	}
+// }
+
+// char	*fillit(char *map, char *a, int map_size)
+// {
+// 	char	*map_ptr;
+// 	int i;
+// 	map_size = 4; // !!!
+// 	// int j;
+// 	i = 0;
+// 	while (i < map_size * map_size)
+// 	{
+// 		if ((map_ptr = strpbrk(map, a))) // ИСПОЛЬЗОВАТЬ ФУНКЦИЮ ИЗ ЛИБЫ!!!!!!!
+// 		{
+// 			*map_ptr = 'A';
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < map_size * map_size)
+// 	{
+// 		if (map[i] != 'A')
+// 			map[i] = '.';
+// 		i++;
+// 	}
+// 	// ft_putstr(map);
+// 	// printf("%s", map);
+// 	return (map);
+// }
