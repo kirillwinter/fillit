@@ -28,6 +28,7 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	
 	pos_x = *i % map_size;
 	pos_y = *i / map_size;
+	fig->touch = 1;
 	if (pos_y + fig->axis[0][0] < 0)
 		*i = -fig->axis[0][0] * map_size;
 	/* проверяем выход за карту по Х */
@@ -38,10 +39,7 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	}
 	/* проверяем выход за карту по У */
 	if (fig->height_positiv + pos_y >= map_size)
-	{
-		printf("%c!!!!!\n", fig->ch);
 		return (-1);
-	}
 	if ((map[*i + fig->linear[0]] == '.' && map[*i + fig->linear[1]] == '.'
 		&& map[*i + fig->linear[2]] == '.' && map[*i] == '.'))
 	{
@@ -49,6 +47,8 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 		fig->used = 1;
 		return (1);
 	}
+	else
+		(*i)++;
 	// put_fig(map + i, fig, '.');
     return (0);
 }
@@ -57,37 +57,55 @@ int		recurs_fillit(char *map, t_elem *fig, int map_size)
 {
 	int	i;
 	int	res;
+	char flag;
+	t_elem *head;
+	int flag2;
 
-	while(fig)
+	flag = 0;
+	head = fig;
+	flag2 = 0;
+	if (fig->used == 0 && fig->touch == 1 && fig->ch == 'A' && flag2 == 0)
 	{
-		if (fig->used == 1)
-			fig = fig->next;
-		else
+		map_size++;
+		printf("HUI");
+		free(map);
+		map = map_creation(map_size);
+		fig = head;
+		printf("HUI");
+		while (fig)
 		{
-			while (fig)
+			get_lin_coord(map_size, head);
+			fig = fig->next;
+		}
+		recurs_fillit(map, fig, map_size);
+		flag2 = 1;
+	}
+		
+	while (fig)
+	{
+		if (!fig->used)
+		{
+			flag = 1;
+			i = 0;
+			while (i < map_size * map_size)
 			{
-				i = 0;
-				while (i < map_size * map_size)
+				if((res = fix_fig_on_map(map, fig, map_size, &i)) == -1)
+					break ;
+				else if (res == 0)
+					continue ;
+				else
 				{
-					if((res = fix_fig_on_map(map, fig, map_size, &i)) == 1)
-						break ;
-					else if (res == 0)
-					{
-						i++;
-						continue ;
-					}
-					else
-					{
-						if (recurs_fillit(map, fig, map_size))
-							return (1);
-						put_fig(map + i, fig, '.');
-						fig->used = 0;
-					}
-					i++;
+					if (recurs_fillit(map, fig, map_size))
+						return (1);
+					put_fig(map + i, fig, '.');
+					fig->used = 0;
 				}
-				fig = fig->next;
+				i++;
 			}
 		}
+		fig = fig->next;
 	}
-	return (0);
+	
+	
+	return (flag == 0);
 }

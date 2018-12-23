@@ -58,7 +58,8 @@ char	*get_struct_figures(char *filename, int tet_count)
 
 	// }
 	// map = fillit(map, head->next, 4);
-	recurs_fillit(map, head, 4);
+	printf("i = %d  \n", recurs_fillit(map, head, 4));
+	// recurs_fillit(map, head, 4);
 	print_map(map);
 	ft_close_file(fd);
 	ft_putchar('\n');
