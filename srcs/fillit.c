@@ -20,12 +20,12 @@ void	put_fig(char *map, t_elem *fig, int i)
 	map[i] = fig->ch;
 }
 
-char	*fillit(char *map, t_elem *fig, int map_size)
+int		fillit(char *map, t_elem *fig, int map_size, int offset)
 {
-	int		i;
 	int		pos_x;
 	int		pos_y;
-	
+	int		i;
+
 	i = 0;
 	while (i < map_size * map_size)
 	{
@@ -46,13 +46,23 @@ char	*fillit(char *map, t_elem *fig, int map_size)
 			return (0);
 			fillit(map, fig, map_size + 1);
 		}
-		if ((map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.'
-			&& map[i + fig->linear[2]] == '.' && map[i] == '.'))
+		if ((map[i + offset + fig->linear[0]] == '.' && map[i + offset + fig->linear[1]] == '.'
+			&& map[i + offset + fig->linear[2]] == '.' && map[i offset] == '.'))
 		{
 			put_fig(map, fig, i);
-			break ;
+			return (1);
 		}
 		i++;
 	}
-    return (map);
+    return (0);
+}
+
+int		recurs_fillit(char *map, t_elem *head, int map_size)
+{
+	int offset;
+
+	offset = 0;
+	
+	fillit(map, head, map_size, offset)
+	head = head->next
 }
