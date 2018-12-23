@@ -92,5 +92,5 @@ void	get_width(t_elem *fig)
 		max = fig->axis[1][1];
 	if (fig->axis[2][1] > max)
 		max = fig->axis[2][1];
-	fig->width = max;
+	fig->width = max + 1;
 }

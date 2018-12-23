@@ -26,14 +26,9 @@ typedef struct		s_elem
 	int		    	width;
 	char			ch;
 	int				used;
+	int				touch;
 	struct s_elem	*next;
 }					t_elem;
-
-typedef struct	s_map
-{
-	char	*map;
-	int		size;
-}				t_map;
 
 int		ft_read_file_validate(char *filename);
 char	*get_struct_figures(char *filename, int tet_count);

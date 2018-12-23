@@ -28,14 +28,17 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	
 	pos_x = *i % map_size;
 	pos_y = *i / map_size;
-	fig->touch = 1;
+	// fig->touch = 1;
 	if (pos_y + fig->axis[0][0] < 0)
 		*i = -fig->axis[0][0] * map_size;
+	if (fig->width > map_size)
+		return (-1);
 	/* проверяем выход за карту по Х */
 	if (fig->width + pos_x > map_size)
 	{
 		/* идем на следующую строку (уверичиваем у) */
 		*i = (1 + pos_y) * map_size;
+		return (0);
 	}
 	/* проверяем выход за карту по У */
 	if (fig->height_positiv + pos_y >= map_size)
@@ -53,34 +56,15 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
     return (0);
 }
 
-int		recurs_fillit(char *map, t_elem *fig, int map_size)
+int		recurs_fillit(char *map, t_elem *head, int map_size)
 {
 	int	i;
 	int	res;
 	char flag;
-	t_elem *head;
-	int flag2;
+	t_elem *fig;
 
 	flag = 0;
-	head = fig;
-	flag2 = 0;
-	if (fig->used == 0 && fig->touch == 1 && fig->ch == 'A' && flag2 == 0)
-	{
-		map_size++;
-		printf("HUI");
-		free(map);
-		map = map_creation(map_size);
-		fig = head;
-		printf("HUI");
-		while (fig)
-		{
-			get_lin_coord(map_size, head);
-			fig = fig->next;
-		}
-		recurs_fillit(map, fig, map_size);
-		flag2 = 1;
-	}
-		
+	fig = head;
 	while (fig)
 	{
 		if (!fig->used)
@@ -95,7 +79,7 @@ int		recurs_fillit(char *map, t_elem *fig, int map_size)
 					continue ;
 				else
 				{
-					if (recurs_fillit(map, fig, map_size))
+					if (recurs_fillit(map, head, map_size))
 						return (1);
 					put_fig(map + i, fig, '.');
 					fig->used = 0;

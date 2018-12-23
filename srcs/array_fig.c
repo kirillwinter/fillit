@@ -36,7 +36,7 @@ char	*get_struct_figures(char *filename, int tet_count)
 		return (NULL);
 	map_size = get_map_size(tet_count);
 	head = NULL;
-	map = map_creation(4);
+	map = map_creation(map_size);
 	i = -1;
 	while ((read(fd, buf, BUFF_SIZE)))
 	{
@@ -58,7 +58,18 @@ char	*get_struct_figures(char *filename, int tet_count)
 
 	// }
 	// map = fillit(map, head->next, 4);
-	printf("i = %d  \n", recurs_fillit(map, head, 4));
+	while (recurs_fillit(map, head, map_size) == 0)
+	{
+		map_size++;
+		free(map);
+		map = map_creation(map_size);
+		fig = head;
+		while (fig)
+		{
+			get_lin_coord(map_size, fig);
+			fig = fig->next;
+		}
+	}
 	// recurs_fillit(map, head, 4);
 	print_map(map);
 	ft_close_file(fd);

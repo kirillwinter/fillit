@@ -21,7 +21,7 @@ int		get_map_size(int tet_count)
 		return (0);
 	while (i * i < tet_count * 4)
 		i++;
-	i = 4; // УДАЛИТЬ СТРОКУ
+	//i = 4; // УДАЛИТЬ СТРОКУ
 	return (i);
 }
 

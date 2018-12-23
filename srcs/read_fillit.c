@@ -12,21 +12,6 @@
 
 #include "fillit.h"
 
-void	character_replacement(char *buf)
-{
-	int			i;
-	static char	ch = 'A';
-
-	i = 0;
-	while (buf[i] != '\0')
-	{
-		if (buf[i] == '#')
-			buf[i] = ch;
-		i++;
-	}
-	ch++;
-}
-
 int		validate_touch(char *buf, int i)
 {
 	int valid;
