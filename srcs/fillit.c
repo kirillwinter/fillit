@@ -21,54 +21,73 @@ void	put_fig(char *pos, t_elem *fig, char ch)
 	*(pos) = ch;
 }
 
-int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int i)
+int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 {
 	int		pos_x;
 	int		pos_y;
 	
-	pos_x = i % map_size;
-	pos_y = i / map_size;
+	pos_x = *i % map_size;
+	pos_y = *i / map_size;
 	if (pos_y + fig->axis[0][0] < 0)
-		i = -fig->axis[0][0] * map_size;
+		*i = -fig->axis[0][0] * map_size;
 	/* проверяем выход за карту по Х */
 	if (fig->width + pos_x > map_size)
 	{
 		/* идем на следующую строку (уверичиваем у) */
-		i = (1 + pos_y) * map_size;
+		*i = (1 + pos_y) * map_size;
 	}
 	/* проверяем выход за карту по У */
-	if (fig->height_positiv + pos_y > map_size)
+	if (fig->height_positiv + pos_y >= map_size)
 	{
 		printf("%c!!!!!\n", fig->ch);
-		return (-2);
-	}
-	if ((map[i + fig->linear[0]] == '.' && map[i + fig->linear[1]] == '.'
-		&& map[i + fig->linear[2]] == '.' && map[i] == '.'))
-	{
-		put_fig(map + i, fig, fig->ch);
 		return (-1);
 	}
-	put_fig(map + i, fig, '.');
-    return (i);
+	if ((map[*i + fig->linear[0]] == '.' && map[*i + fig->linear[1]] == '.'
+		&& map[*i + fig->linear[2]] == '.' && map[*i] == '.'))
+	{
+		put_fig(map + *i, fig, fig->ch);
+		fig->used = 1;
+		return (1);
+	}
+	// put_fig(map + i, fig, '.');
+    return (0);
 }
 
-int		recurs_fillit(char *map, t_elem *head, int map_size)
+int		recurs_fillit(char *map, t_elem *fig, int map_size)
 {
-	int offset;
 	int	i;
+	int	res;
 
-	offset = 0;
-	while (head)
+	while(fig)
 	{
-		i = 0;
-		while (i < map_size * map_size)
+		if (fig->used == 1)
+			fig = fig->next;
+		else
 		{
-			if((i = fix_fig_on_map(map, head, map_size, i)) == -1)
-				break ;
-			i++;
+			while (fig)
+			{
+				i = 0;
+				while (i < map_size * map_size)
+				{
+					if((res = fix_fig_on_map(map, fig, map_size, &i)) == 1)
+						break ;
+					else if (res == 0)
+					{
+						i++;
+						continue ;
+					}
+					else
+					{
+						if (recurs_fillit(map, fig, map_size))
+							return (1);
+						put_fig(map + i, fig, '.');
+						fig->used = 0;
+					}
+					i++;
+				}
+				fig = fig->next;
+			}
 		}
-		head = head->next;
 	}
 	return (0);
-	
 }
