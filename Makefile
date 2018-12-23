@@ -12,7 +12,8 @@
 
 NAME = fillit
 
-SRCS = srcs/main.c srcs/fillit.c srcs/read_fillit.c srcs/array_fig.c srcs/ft_new_fig.c
+SRCS = srcs/main.c srcs/fillit.c srcs/read_fillit.c srcs/array_fig.c \
+		srcs/ft_new_fig.c srcs/figure_characteristics.c srcs/map.c
 
 INCLUDES = includes
 

@@ -12,27 +12,6 @@
 
 #include "fillit.h"
 
-int		get_start_pos(char *buf)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (j <= 4)
-	{
-		while (i < 20)
-		{
-			if (buf[i] == '#')
-				return (i);
-			i += 5;
-		}
-		j++;
-		i = j;
-	}
-	return (i);
-}
-
 char	*get_mask(int tet_count)
 {
 	char *mask;
@@ -43,44 +22,6 @@ char	*get_mask(int tet_count)
 	return (mask);
 }
 
-void	get_coordinates_fig(char *buf, t_elem *fig)
-{
-	int		i;
-	int		nb;
-	int		start_pos;
-
-	i = 0;
-	nb = 0;
-	start_pos = get_start_pos(buf);
-	while (buf[i] != '\0')
-	{
-		if (buf[i] == '#' && i != start_pos)
-		{
-			if (i < start_pos)
-			{
-				fig->axis[nb][0] = (i - start_pos) / 5 - 1;
-				fig->axis[nb][1] = (i - start_pos) % 5 + 5;
-			}
-			else
-			{
-				fig->axis[nb][0] = (i - start_pos) / 5;
-				fig->axis[nb][1] = (i - start_pos) % 5;
-			}
-			nb++;
-		}
-		i++;
-	}
-}
-
-void	lin_coord(int map_size, t_elem *fig)
-{
-	int		i;
-
-	i = -1;
-	while (++i < 3)
-		fig->linear[i] = fig->axis[i][1] + fig->axis[i][0] * (map_size);
-}
-
 char	*get_struct_figures(char *filename, int tet_count)
 {
 	int		fd;
@@ -89,26 +30,21 @@ char	*get_struct_figures(char *filename, int tet_count)
 	t_elem	*head;
 	int		map_size;
 	char 	*map;
+	int		i;
 
 	if ((fd = ft_read_file(filename)) == -1)
 		return (NULL);
 	map_size = get_map_size(tet_count);
 	head = NULL;
 	map = map_creation(4);
+	i = -1;
 	while ((read(fd, buf, BUFF_SIZE)))
 	{
 		buf[20] = '\0';
-		fig = ft_new_fig();
-		get_coordinates_fig(buf, fig);
-		lin_coord(map_size, fig);
-		// printf("linear = %s  \n", fig->linear);
+		fig = ft_new_fig(buf, map_size, ++i);
+	
 		map = fillit(map, fig, 4);
 		ft_list_push_back(&head, fig);
-		
-		// fig = fig.next;
-		// rez = fillit(map_creation(get_map_size(tet_count)), get_dec_coord(del_bsn(buf)), get_map_size(tet_count)); 
-		// ft_new_fig(get_dec_coord(del_bsn(buf)), ch, 1, 1);
-		// printf("coord = %s\n\n", arr[nbr_tet]);
 	}
 	// int i = 0;
 	// while (head)

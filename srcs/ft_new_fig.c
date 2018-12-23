@@ -12,12 +12,17 @@
 
 #include "fillit.h"
 
-t_elem	*ft_new_fig()
+t_elem	*ft_new_fig(char *buf, int map_size, int nb)
 {
 	t_elem	*elem;
 
 	if (!(elem = (t_elem *)malloc(sizeof(t_elem))))
 		return (NULL);
+	get_coordinates_fig(buf, elem);
+	get_lin_coord(map_size, elem);
+	get_width(elem);
+	get_positiv_height(elem);
+	elem->ch = 'A' + nb;
 	elem->next = NULL;
 	return (elem);
 }
