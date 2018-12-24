@@ -51,8 +51,8 @@ int		validate_tetriminos(char *buf, int ret)
 		}
 		bsn_coun += (buf[i] == '\n') ? 1 : 0;
 	}
-	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n'
-		|| buf[20] != '\n') || (grid_coun != 4 || bsn_coun != 5) || (val < 5))
+	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n' ||
+	(buf[20] != '\n' && buf[20] != '\0')) || (grid_coun != 4 || bsn_coun != 5) || (val < 5))
 		return (0);
 	return (1);
 }
@@ -61,25 +61,22 @@ int		ft_read_file_validate(char *filename)
 {
 	int		fd;
 	int		ret;
-	char	*buf;
+	char	buf[BUFF_SIZE];
 	int		tet_count;
 
 	tet_count = 0;
 	if ((fd = ft_read_file(filename)) == -1)
-		return (0);
-	if (!(buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
 		return (0);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		if (validate_tetriminos(buf, ret) == 0)
 		{
-			ft_putstr("error");
+			ft_putstr("error\n");
 			return (0);
 		}
 		tet_count++;
 	}
-	free(buf);
 	ft_close_file(fd);
 	return (tet_count);
 }

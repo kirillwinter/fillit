@@ -28,7 +28,6 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	
 	pos_x = *i % map_size;
 	pos_y = *i / map_size;
-	// fig->touch = 1;
 	if (pos_y + fig->axis[0][0] < 0)
 		*i = -fig->axis[0][0] * map_size;
 	if (fig->width > map_size)
@@ -52,16 +51,15 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	}
 	else
 		(*i)++;
-	// put_fig(map + i, fig, '.');
     return (0);
 }
 
 int		recurs_fillit(char *map, t_elem *head, int map_size)
 {
-	int	i;
-	int	res;
-	char flag;
-	t_elem *fig;
+	int		i;
+	int		res;
+	char	flag;
+	t_elem	*fig;
 
 	flag = 0;
 	fig = head;
@@ -89,7 +87,29 @@ int		recurs_fillit(char *map, t_elem *head, int map_size)
 		}
 		fig = fig->next;
 	}
-	
-	
 	return (flag == 0);
+}
+
+void	fillit(t_elem *head, int map_size)
+{
+	t_elem	*fig;
+	char	*map;
+
+	map = map_creation(map_size);
+
+	while (recurs_fillit(map, head, map_size) == 0)
+	{
+		map_size++;
+		free(map);
+		map = map_creation(map_size);
+		fig = head;
+		while (fig)
+		{
+			get_lin_coord(map_size, fig);
+			fig = fig->next;
+		}
+	}
+	print_map(map, map_size);
+	del_list(&head);
+	free(map);
 }

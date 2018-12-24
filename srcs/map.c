@@ -21,7 +21,6 @@ int		get_map_size(int tet_count)
 		return (0);
 	while (i * i < tet_count * 4)
 		i++;
-	//i = 4; // УДАЛИТЬ СТРОКУ
 	return (i);
 }
 
@@ -35,13 +34,11 @@ char	*map_creation(int map_size)
 	return (map);
 }
 
-void	print_map(char *map)
+void	print_map(char *map, int map_size)
 {
 	int i;
-	int map_size;
 
 	i = 0;
-	map_size = ft_sqrt(ft_strlen(map));
 	while (map[i] != '\0')
 	{
 		ft_putchar(map[i]);
