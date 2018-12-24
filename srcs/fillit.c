@@ -61,8 +61,8 @@ int		recurs_fillit(char *map, t_elem *head, int map_size)
 	{
 		if ((!(fig->used)) && ((flag = 1)))
 		{
-			i = -1;
-			while (++i < map_size * map_size)
+			i = 0;
+			while (i < map_size * map_size)
 				if ((res = fix_fig_on_map(map, fig, map_size, &i)) == -1)
 					break ;
 				else if (res == 0)
@@ -70,7 +70,7 @@ int		recurs_fillit(char *map, t_elem *head, int map_size)
 				else if (recurs_fillit(map, head, map_size))
 					return (1);
 				else
-					put_fig(map + i, fig, '.', 0);
+					put_fig(map + i++, fig, '.', 0);
 		}
 		fig = fig->next;
 	}

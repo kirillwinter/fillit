@@ -26,6 +26,8 @@ int		main(int argc, char **argv)
 			head = get_struct_figures(argv[1], map_size);
 			fillit(head, map_size);
 		}
+		else if (tet_count == 0)
+			ft_putstr("error\n");
 	}
 	return (0);
 }

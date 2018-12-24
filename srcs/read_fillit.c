@@ -71,12 +71,11 @@ int		ft_read_file_validate(char *filename)
 	{
 		buf[ret] = '\0';
 		if (validate_tetriminos(buf, ret) == 0)
-		{
-			ft_putstr("error\n");
 			return (0);
-		}
 		tet_count++;
 	}
+	if (buf[BUFF_SIZE - 1])
+		return (0);
 	ft_close_file(fd);
 	return (tet_count);
 }
