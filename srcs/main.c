@@ -14,9 +14,9 @@
 
 int		main(int argc, char **argv)
 {
-	int tet_count;
-	int	map_size;
-	t_elem *head;
+	int		tet_count;
+	int		map_size;
+	t_elem	*head;
 
 	if (argc == 2)
 	{

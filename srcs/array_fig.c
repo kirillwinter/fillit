@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-t_elem	*get_struct_figures(char *filename,	int map_size)
+t_elem	*get_struct_figures(char *filename, int map_size)
 {
 	int		fd;
 	char	buf[BUFF_SIZE];

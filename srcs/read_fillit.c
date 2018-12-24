@@ -32,12 +32,12 @@ int		validate_tetriminos(char *buf, int ret)
 {
 	int i;
 	int grid_coun;
-	int bsn_coun;
+	int dot_coun;
 	int val;
 
 	i = -1;
 	grid_coun = 0;
-	bsn_coun = 0;
+	dot_coun = 0;
 	val = 0;
 	while (++i < ret)
 	{
@@ -49,10 +49,10 @@ int		validate_tetriminos(char *buf, int ret)
 			if (!(val += validate_touch(buf, i)))
 				return (0);
 		}
-		bsn_coun += (buf[i] == '\n') ? 1 : 0;
+		dot_coun += (buf[i] == '.') ? 1 : 0;
 	}
-	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n' ||
-	(buf[20] != '\n' && buf[20] != '\0')) || (grid_coun != 4 || bsn_coun != 5) || (val < 5))
+	if ((buf[4] != '\n' || buf[9] != '\n' || buf[14] != '\n' || buf[19] != '\n')
+	|| (grid_coun != 4 || dot_coun != 12) || (val < 5))
 		return (0);
 	return (1);
 }
@@ -69,10 +69,7 @@ int		ft_read_file_validate(char *filename)
 		return (0);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
-		if (ret == 20)
-			buf[21] = '\0';
-		else
-			buf[ret] = '\0';
+		buf[ret] = '\0';
 		if (validate_tetriminos(buf, ret) == 0)
 		{
 			ft_putstr("error\n");
