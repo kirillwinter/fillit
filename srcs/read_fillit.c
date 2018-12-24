@@ -69,7 +69,10 @@ int		ft_read_file_validate(char *filename)
 		return (0);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
-		buf[ret] = '\0';
+		if (ret == 20)
+			buf[21] = '\0';
+		else
+			buf[ret] = '\0';
 		if (validate_tetriminos(buf, ret) == 0)
 		{
 			ft_putstr("error\n");

@@ -32,14 +32,11 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 		*i = -fig->axis[0][0] * map_size;
 	if (fig->width > map_size)
 		return (-1);
-	/* проверяем выход за карту по Х */
 	if (fig->width + pos_x > map_size)
 	{
-		/* идем на следующую строку (уверичиваем у) */
 		*i = (1 + pos_y) * map_size;
 		return (0);
 	}
-	/* проверяем выход за карту по У */
 	if (fig->height_positiv + pos_y >= map_size)
 		return (-1);
 	if ((map[*i + fig->linear[0]] == '.' && map[*i + fig->linear[1]] == '.'
@@ -52,6 +49,28 @@ int		fix_fig_on_map(char *map, t_elem *fig, int map_size, int *i)
 	else
 		(*i)++;
     return (0);
+}
+
+int		map_bypass(char *map, t_elem *head,  t_elem *fig, int map_size, int i)
+{
+	int res;
+
+	while (i < map_size * map_size)
+	{
+		if((res = fix_fig_on_map(map, fig, map_size, &i)) == -1)
+			break ;
+		else if (res == 0)
+			continue ;
+		else
+		{
+			if (recurs_fillit(map, head, map_size))
+				return (1);
+			put_fig(map + i, fig, '.');
+			fig->used = 0;
+		}
+		i++;
+	}
+	return (0);
 }
 
 int		recurs_fillit(char *map, t_elem *head, int map_size)
@@ -69,21 +88,8 @@ int		recurs_fillit(char *map, t_elem *head, int map_size)
 		{
 			flag = 1;
 			i = 0;
-			while (i < map_size * map_size)
-			{
-				if((res = fix_fig_on_map(map, fig, map_size, &i)) == -1)
-					break ;
-				else if (res == 0)
-					continue ;
-				else
-				{
-					if (recurs_fillit(map, head, map_size))
-						return (1);
-					put_fig(map + i, fig, '.');
-					fig->used = 0;
-				}
-				i++;
-			}
+			if ((res = map_bypass(map, head, fig, map_size, i)) == 1)
+				return (1);
 		}
 		fig = fig->next;
 	}
